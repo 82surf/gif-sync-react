@@ -5,20 +5,28 @@ import Child from "./Child";
 import useCacheImg from "../hooks/useCacheImg";
 import newImgReq from "../utils/newImgSrc";
 
-import character from "../static/images/cobby.gif";
-import hat from "../static/images/hat.gif";
-import cloth from "../static/images/cloth.gif";
-import effect from "../static/images/effect.gif";
+import characterGif from "../static/images/cobby.gif";
+import hatGif from "../static/images/hat.gif";
+import clothGif from "../static/images/cloth.gif";
+import effectGif from "../static/images/effect.gif";
 
-// S3 URL로 변경해도 문제 없이 작동합니다.
-const CHARACTER_URL = character;
-const HAT_URL = hat;
-const CLOTH_URL = cloth;
-const EFFECT_URL = effect;
+// START -- 이미지 경로 변경은 여기를 수정해주세요.
+const CHARACTER_URL = characterGif;
+const HAT_URL = hatGif;
+const CLOTH_URL = clothGif;
+const EFFECT_URL = effectGif;
+// END --
+
+const IMAGE_SOURCES = {
+  character: CHARACTER_URL,
+  hat: HAT_URL,
+  cloth: CLOTH_URL,
+  effect: EFFECT_URL,
+};
 
 const Parent = () => {
   const [cobby, setCobby] = useState({
-    character: newImgReq(CHARACTER_URL),
+    character: newImgReq(IMAGE_SOURCES.character),
     hat: null,
     cloth: null,
     effect: null,
@@ -26,42 +34,19 @@ const Parent = () => {
 
   const isLoading = useCacheImg(cobby);
 
-  const toggleHat = () => {
+  const toggleHandler = (e) => {
+    // 버튼이 클릭되면
+    // 해당 값이 있거나 없거나
+    const key = e.target.id;
+
     setCobby((state) => {
-      const nextState = state.hat
-        ? { ...state, hat: null }
-        : {
-            character: newImgReq(CHARACTER_URL),
-            hat: newImgReq(HAT_URL),
-            cloth: state.cloth ? newImgReq(CLOTH_URL) : null,
-            effect: state.effect ? newImgReq(EFFECT_URL) : null,
-          };
-      return nextState;
-    });
-  };
-  const toggleCloth = () => {
-    setCobby((state) => {
-      const nextState = state.cloth
-        ? { ...state, cloth: null }
-        : {
-            character: newImgReq(CHARACTER_URL),
-            hat: state.hat ? newImgReq(HAT_URL) : null,
-            cloth: newImgReq(CLOTH_URL),
-            effect: state.effect ? newImgReq(EFFECT_URL) : null,
-          };
-      return nextState;
-    });
-  };
-  const toggleEffect = () => {
-    setCobby((state) => {
-      const nextState = state.effect
-        ? { ...state, effect: null }
-        : {
-            character: newImgReq(CHARACTER_URL),
-            hat: state.hat ? newImgReq(HAT_URL) : null,
-            cloth: state.cloth ? newImgReq(CLOTH_URL) : null,
-            effect: newImgReq(EFFECT_URL),
-          };
+      const nextState = {
+        character: newImgReq(IMAGE_SOURCES.character),
+        hat: state.hat ? newImgReq(IMAGE_SOURCES.hat) : null,
+        cloth: state.cloth ? newImgReq(IMAGE_SOURCES.cloth) : null,
+        effect: state.effect ? newImgReq(IMAGE_SOURCES.effect) : null,
+      };
+      nextState[key] = state[key] ? null : newImgReq(IMAGE_SOURCES[key]);
       return nextState;
     });
   };
@@ -69,9 +54,15 @@ const Parent = () => {
   return (
     <>
       <Child isLoading={isLoading} cobby={cobby} />
-      <button onClick={toggleHat}>HAT</button>
-      <button onClick={toggleCloth}>CLOTH</button>
-      <button onClick={toggleEffect}>EFFECT</button>
+      <button onClick={toggleHandler} id="hat">
+        HAT
+      </button>
+      <button onClick={toggleHandler} id="cloth">
+        CLOTH
+      </button>
+      <button onClick={toggleHandler} id="effect">
+        EFFECT
+      </button>
     </>
   );
 };
