@@ -2,11 +2,11 @@ import { useState, useLayoutEffect } from "react";
 
 import cacheImages from "../utils/cacheImages.js";
 
-const useCacheImg = (srcList) => {
+const useCacheImg = (cobby) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useLayoutEffect(() => {
-    cacheImages(srcList)
+    cacheImages(Object.values(cobby))
       .then(() => {
         setIsLoading(false);
       })
@@ -14,7 +14,7 @@ const useCacheImg = (srcList) => {
         console.log("error!");
         setIsLoading(true);
       });
-  }, [srcList]);
+  }, [cobby]);
 
   return isLoading;
 };
