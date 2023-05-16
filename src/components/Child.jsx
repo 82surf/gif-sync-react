@@ -1,13 +1,17 @@
-import character from "../static/images/Base_Cobby_Final.gif";
 import styles from "./Child.module.css";
 
-const Child = ({ clothSrc }) => {
-  return (
-    <>
-      <img src={character} className="character" alt="character" />
-      <img src={clothSrc} className={styles.cloth} alt="cloth" />
-    </>
-  );
+const Child = ({ imagesPreloaded, srcList }) => {
+  if (imagesPreloaded) {
+    return (
+      <>
+        {srcList.map((src, idx) => (
+          <img key={idx} src={src} className={styles.cobby} />
+        ))}
+      </>
+    );
+  } else {
+    return <p>Loading</p>;
+  }
 };
 
 export default Child;
