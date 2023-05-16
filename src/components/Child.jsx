@@ -1,11 +1,11 @@
 import styles from "./Child.module.css";
 
-const Child = ({ imagesPreloaded, srcList }) => {
-  if (imagesPreloaded) {
+const Child = ({ isLoading, srcList }) => {
+  if (!isLoading) {
     return (
       <>
         {srcList.map((src, idx) => (
-          <img key={idx} src={src} className={styles.cobby} />
+          <img key={idx} src={src} className={styles.cobby} alt="cobby" />
         ))}
       </>
     );
