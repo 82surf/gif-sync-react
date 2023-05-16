@@ -3,18 +3,20 @@ import { useState } from "react";
 import Child from "./Child";
 
 import useCacheImg from "../hooks/useCacheImg";
-import character from "../static/images/Base_Cobby_Final.gif";
+import character from "../static/images/cobby.gif";
+import hat from "../static/images/hat.gif";
+import cloth from "../static/images/cloth.gif";
+import effect from "../static/images/effect.gif";
 
-const HAT_URL =
-  "https://cobby-play.com/api/store/resources/assets/799715f9-90ed-4a2a-b553-cb9fc8b2b355_1684135108236.gif";
-const CLOTH_URL =
-  "https://cobby-play.com/api/store/resources/assets/017e9195-ab26-4ef3-bd21-d95c974f0555_1683855145605.gif";
-const EFFECT_URL =
-  "https://cobby-play.com/api/store/resources/assets/30d25c11-dda6-4faa-8aa4-c166f457da5b_1683856206593.gif";
+// S3 URL로 변경해도 문제 없이 작동합니다.
+const CHARACTER_URL = character;
+const HAT_URL = hat;
+const CLOTH_URL = cloth;
+const EFFECT_URL = effect;
 
 const Parent = () => {
   const [cobby, setCobby] = useState({
-    character: character + "?" + Date.now(),
+    character: CHARACTER_URL + "?" + Date.now(),
     hat: null,
     cloth: null,
     effect: null,
@@ -31,7 +33,7 @@ const Parent = () => {
       const nextState = state.hat
         ? { ...state, hat: null }
         : {
-            character: newImgReq(character),
+            character: newImgReq(CHARACTER_URL),
             hat: newImgReq(HAT_URL),
             cloth: state.cloth ? newImgReq(CLOTH_URL) : null,
             effect: state.effect ? newImgReq(EFFECT_URL) : null,
@@ -44,7 +46,7 @@ const Parent = () => {
       const nextState = state.cloth
         ? { ...state, cloth: null }
         : {
-            character: newImgReq(character),
+            character: newImgReq(CHARACTER_URL),
             hat: state.hat ? newImgReq(HAT_URL) : null,
             cloth: newImgReq(CLOTH_URL),
             effect: state.effect ? newImgReq(EFFECT_URL) : null,
@@ -57,7 +59,7 @@ const Parent = () => {
       const nextState = state.effect
         ? { ...state, effect: null }
         : {
-            character: newImgReq(character),
+            character: newImgReq(CHARACTER_URL),
             hat: state.hat ? newImgReq(HAT_URL) : null,
             cloth: state.cloth ? newImgReq(CLOTH_URL) : null,
             effect: newImgReq(EFFECT_URL),
