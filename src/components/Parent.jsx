@@ -3,6 +3,8 @@ import { useState } from "react";
 import Child from "./Child";
 
 import useCacheImg from "../hooks/useCacheImg";
+import newImgReq from "../utils/newImgSrc";
+
 import character from "../static/images/cobby.gif";
 import hat from "../static/images/hat.gif";
 import cloth from "../static/images/cloth.gif";
@@ -16,17 +18,13 @@ const EFFECT_URL = effect;
 
 const Parent = () => {
   const [cobby, setCobby] = useState({
-    character: CHARACTER_URL + "?" + Date.now(),
+    character: newImgReq(CHARACTER_URL),
     hat: null,
     cloth: null,
     effect: null,
   });
 
   const isLoading = useCacheImg(cobby);
-
-  const newImgReq = (src) => {
-    return src + "?" + Date.now();
-  };
 
   const toggleHat = () => {
     setCobby((state) => {
