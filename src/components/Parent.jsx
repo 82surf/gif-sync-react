@@ -12,9 +12,9 @@ import effectGif from "../static/images/effect.gif";
 
 // START -- 이미지 경로 변경은 여기를 수정해주세요.
 const CHARACTER_URL = characterGif;
-const HAT_URL = hatGif;
-const CLOTH_URL = clothGif;
-const EFFECT_URL = effectGif;
+const HAT_URL = process.env.REACT_APP_S3_URL_HAT;
+const CLOTH_URL = process.env.REACT_APP_S3_URL_CLOTH;
+const EFFECT_URL = process.env.REACT_APP_S3_URL_EFFECT;
 // END --
 
 const IMAGE_SOURCES = {
